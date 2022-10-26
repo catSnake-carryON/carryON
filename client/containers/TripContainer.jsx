@@ -1,23 +1,20 @@
 import React, {useState} from 'react';
-import Trip from './Trip';
+import Button from '../components/Button';
+import TripForm from '../components/TripForm';
+import Trip from '../components/Trip';
 import axios from 'axios';
 
 
-const PackingList = () => {
+const TripContainer = () => {
 
     const [showForm, setShowForm] = useState(false);
-
-    const server = axios.create({
-		baseURL: 'http://localhost:3000/',
-	});
 
     const showTrip = () => { //this will render tripform
         setShowForm(!showForm);
     };
     const trips = []; //get request to db with all trips associated with user
     
-    server
-    .get('/api/trips')
+    axios.get('/api/trips')
     .then(data => {
         data.forEach((el, i) => {
             trips.push(<Trip id={el.name+i} name={el.name} destination={el.destination} date={el.date} />)
@@ -31,14 +28,17 @@ const PackingList = () => {
              {showForm ? <TripForm showTrip={showTrip}/> : <></>}
             </div>
             <div>
-            <button id='tripBtn' onClick={showTrip} text='Show/Hide Trip Form'>showTrip</button>
+            <Button id='tripBtn' onClick={showTrip} text='Show/Hide Trip Form'/>
             </div>
             <div>
                 {trips} 
             </div>
+           
         </div>  
+        
+
     );
 };
 
 //module.exports = TripContainer;
-export default PackingList;
+export default TripContainer;
