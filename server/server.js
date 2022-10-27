@@ -43,9 +43,10 @@ app.post('/saveList', userController.saveList, (req, res) => {
   res.send('hello from server');
 });
 
-// app.post('/getWeather', userController.getWeather, (req, res) => {
-//   res.send('trying to save List!')
-// });
+app.post('/getWeather', userController.getWeather, (req, res) => {
+  console.log(res.locals.dailyTempsArr + 'from server')
+  res.status(201).json(res.locals.dailyTempsArr);
+});
 
 app.post('/signup', userController.signUp, (req, res) => {
   // console.log('server hit');
@@ -54,7 +55,7 @@ app.post('/signup', userController.signUp, (req, res) => {
 });
 
 app.post('/login', userController.login, (req, res) => {
-  res.json(res.locals.user);
+  res.json(res.locals);
 });
 
 //assumes checking for logged in status on frontend before sending req
