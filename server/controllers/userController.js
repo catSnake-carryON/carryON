@@ -8,6 +8,7 @@ const { SECRET = 'secret' } = process.env;
 const axios = require('axios');
 
 userController.signUp = async (req, res, next) => {
+  console.log('hello');
   const { email, password } = req.body;
   console.log('signup middleware hit');
   try {
@@ -21,7 +22,7 @@ userController.signUp = async (req, res, next) => {
       res.locals.newUser = user;
       console.log(user);
     } else {
-      res.sendFile(path.resolve(__dirname, '../client/login.html'));
+      res.locals.newUser = 'You are already a user! Please use Log In';
     }
     return next();
   } catch (error) {
@@ -43,7 +44,7 @@ userController.login = async (req, res, next) => {
     // check if the user exists
     const user = await User.User.findOne({ email });
     if (user) {
-      console.log(user);
+      console.log(user.password);
       // check if password matches
       const result = await bcrypt.compare(password, user.password);
       if (result) {
@@ -52,17 +53,23 @@ userController.login = async (req, res, next) => {
         //   { email: user.email },
         //   process.env.ACCESS_TOKEN_SECRET
         // );
+        console.log(result);
+        res.locals.result = result;
         res.locals.user = user;
         // res.locals.loginToken = { token };
         return next();
       } else {
-        res.status(400).alert('Incorrect Password, Try Again');
+        res.locals.result = 'Incorrect login, Try Again';
       }
     } else {
-      res.sendFile(path.resolve(__dirname, '../client/signup.html'));
+      res.locals.result = "User doesn't exist, Please signup~";
     }
   } catch (error) {
-    res.status(400).json({ error });
+    next({
+      log: 'Error in userController.login',
+      status: 400,
+      message: 'Could not locate user, please try again',
+    });
   }
 };
 
@@ -86,11 +93,12 @@ userController.getUser = async (req, res, next) => {
 
 userController.saveList = async (req, res, next) => {
   const { username, packingList, tripName } = req.body;
+  console.log('in savedList')
   console.log(req.body);
   const user = await User.User.findOne({ username: username });
   console.log('user found!');
   const newPackingList = new User.packingList({
-    listOfPackingItems: packingList,
+    packingList: packingList,
     tripName: tripName,
   });
   user.prevPackingLists.push(newPackingList);

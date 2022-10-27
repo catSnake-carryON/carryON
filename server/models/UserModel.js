@@ -32,7 +32,7 @@ const packingListSchema = new Schema({
   destination: {type: String, required: false},
   startDate: {type: Date, required: false},
   endDate: {type: Date, required: false},
-  listOfPackingItems: [packingItemSchema]
+  packingList: [packingItemSchema]
 })
 
 // console.log(packingItemSchema);

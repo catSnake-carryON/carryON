@@ -5,14 +5,15 @@ import Weather from './Weather';
 import axios from 'axios';
 
 const MainDisplay = ({
+  loggedIn,
   name,
   destination,
   depDate,
   returnDate,
   dailyWeatherArr,
+  username,
 }) => {
   console.log('your daily weather array', dailyWeatherArr);
-  // const [showForm, setShowForm] = useState(false);
   const [itemInput, setItemInput] = useState('');
   const [arrOfItems, setArrOfItems] = useState([]);
   const [itemQuantity, setItemQuantity] = useState(1);
@@ -21,19 +22,6 @@ const MainDisplay = ({
     baseURL: 'http://localhost:3000/',
   });
 
-  // const showTrip = () => { //this will render tripform
-  // 	setShowForm(!showForm);
-  // };
-
-  const trips = []; //get request to db with all trips associated with user
-
-  // server
-  // .get('/api/trips')
-  // .then(data => {
-  // 		data.forEach((el, i) => {
-  // 				trips.push(<Trip id={el.name+i} name={el.name} destination={el.destination} date={el.date} />)
-  // 		});
-  // });
 
   return (
     <div>
@@ -51,21 +39,21 @@ const MainDisplay = ({
         itemQuantity={itemQuantity}
         setItemQuantity={setItemQuantity}
       />
-      <ListContainer arrOfItems={arrOfItems} />
+      <ListContainer
+        name={name}
+        arrOfItems={arrOfItems}
+		setArrOfItems={setArrOfItems}
+        username={username}
+        destination={destination}
+        depDate={depDate}
+        returnDate={returnDate}
+        loggedIn={loggedIn}
+      />
       <Weather dailyWeatherArr={dailyWeatherArr} />
     </div>
   );
 };
 
-//module.exports = TripContainer;
 export default MainDisplay;
 
-// <div>
-// 	{showForm ? <TripForm showTrip={showTrip}/> : <></>}
-// </div>
-// <div>
-// 	<button id='tripBtn' onClick={showTrip} text='Show/Hide Trip Form'>showTrip</button>
-// </div>
-// <div>
-// 	{trips}
-// </div>
+

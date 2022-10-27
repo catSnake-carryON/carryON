@@ -8,10 +8,10 @@ const AddItemForm = ({
   itemQuantity,
   setItemQuantity,
 }) => {
+
   const handleOnChange = (e) => {
     e.preventDefault();
     setItemInput(e.target.value);
-    
   };
 
   const quantityOnChange = (e) => {
@@ -22,7 +22,10 @@ const AddItemForm = ({
 
   const addItem = (e) => {
     e.preventDefault();
-    setArrOfItems([...arrOfItems, { item: itemInput, quantity: itemQuantity }]);
+    setArrOfItems([
+      ...arrOfItems,
+      { item: itemInput, quantity: itemQuantity, packed: false},
+    ]);
     //clear our add item form
     setItemInput('');
     setItemQuantity(1);

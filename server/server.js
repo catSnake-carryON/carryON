@@ -5,7 +5,7 @@ const path = require('path');
 // const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 //const tripRouter = require('./routes/tripRouter');
-const userRouter = require('./routes/userRouter');
+// const userRouter = require('./routes/userRouter');
 const userController = require('./controllers/userController');
 const cors = require('cors');
 const port = 3000;
@@ -49,13 +49,13 @@ app.post('/getWeather', userController.getWeather, (req, res) => {
 });
 
 app.post('/signup', userController.signUp, (req, res) => {
-  console.log('server hit');
-  console.log(res.locals.user);
-  res.send('hello from server');
+  // console.log('server hit');
+  // console.log(res.locals.newUser);
+  res.json(res.locals.newUser);
 });
 
 app.post('/login', userController.login, (req, res) => {
-  res.send('hello from server');
+  res.json(res.locals);
 });
 
 //assumes checking for logged in status on frontend before sending req
