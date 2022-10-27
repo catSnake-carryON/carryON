@@ -24,9 +24,15 @@
     "supertest": "^6.3.1"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.3.16",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
+<<<<<<< HEAD
     "jest": "^29.2.2",
     "jsonwebtoken": "^8.5.1"
+=======
+    "jsonwebtoken": "^8.5.1",
+    "node-geocoder": "^4.2.0"
+>>>>>>> dev
   }
 }
