@@ -4,8 +4,9 @@ const express = require('express');
 const path = require('path');
 // const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
-const tripRouter = require('./routes/tripRouter');
+//const tripRouter = require('./routes/tripRouter');
 const userRouter = require('./routes/userRouter');
+const userController = require('./controllers/userController');
 const cors = require('cors');
 const port = 3000;
 
@@ -36,8 +37,39 @@ app.get('/', (req, res) => {
   res.status(200).send('hello! you are connected :)');
 });
 
-app.use('/api/trips', tripRouter);
-app.use('/api/users', userRouter);
+app.post('/saveList', userController.saveList, (req, res) => {
+  console.log('server hit')
+  console.log(res.locals.user)
+  res.send('hello from server');
+}) 
+
+app.post('/signup', userController.signUp, (req, res) => {
+  console.log('server hit')
+  console.log(res.locals.user)
+  res.send('hello from server');
+})
+
+app.post('/login', userController.login, (req, res) => {
+  res.send('hello from server');
+})
+
+//assumes checking for logged in status on frontend before sending req
+
+// app.use('/api/trips', tripRouter);
+// app.use('/api/users', userRouter);
+
+
+// server.post('/saveList', {
+//   username: username,
+//   packingList: [{content: 'underwear',
+//                   quanity: 1,
+//                   packed: false}]
+// })
+
+
+
+
+
 
 app.use((req, res) => res.status(404));
 

@@ -1,23 +1,24 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-//const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config();
 const path = require('path');
 const User = require('../models/UserModel');
-
 const userController = {};
-// const { SECRET = 'secret' } = process.env;
+const { SECRET = 'secret' } = process.env;
 
 userController.signUp = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log('signup middleware hit');
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.User.findOne({ email });
     if (!existingUser) {
       // hash the password
       req.body.password = await bcrypt.hash(req.body.password, 10);
       // create a new user
-      const user = await User.create(req.body);
+      const user = await User.User.create(req.body);
       // send new user as response
       res.locals.newUser = user;
+      console.log(user);
     } else {
       res.sendFile(path.resolve(__dirname, '../client/login.html'));
     }
@@ -35,21 +36,24 @@ userController.signUp = async (req, res, next) => {
 
 // eslint-disable-next-line consistent-return
 userController.login = async (req, res, next) => {
+  console.log('login middleware hit');
   const { email, password } = req.body;
   try {
     // check if the user exists
-    const user = await User.findOne({ email });
+    const user = await User.User.findOne({ email });
     if (user) {
+      console.log(user);
       // check if password matches
       const result = await bcrypt.compare(password, user.password);
       if (result) {
-        // sign token and send it in response
-        const token = await jwt.sign(
-          { email: user.email },
-          process.env.ACCESS_TOKEN_SECRET
-        );
-        res.locals.loginToken = { token };
-        next();
+        // sign token and send it in response (carryON this causes errors)
+        // const token = jwt.sign(
+        //   { email: user.email },
+        //   process.env.ACCESS_TOKEN_SECRET
+        // );
+        res.locals.user = user;
+        // res.locals.loginToken = { token };
+        return next();
       } else {
         res.status(400).alert('Incorrect Password, Try Again');
       }
@@ -61,11 +65,13 @@ userController.login = async (req, res, next) => {
   }
 };
 
-userController.getUsers = async (req, res, next) => {
+userController.getUser = async (req, res, next) => {
+  console.log('in getUser');
+  const { username } = req.body;
   try {
-    const found = await User.find({});
-    console.log(found);
-    res.locals.users = found;
+    const found = await User.User.findOne({ username: username });
+    console.log(found.trips);
+    res.locals.user = found;
     return next();
   } catch (error) {
     return next({
@@ -75,6 +81,30 @@ userController.getUsers = async (req, res, next) => {
       },
     });
   }
+};
+
+// server.post('/saveList', {
+//   username: username,
+//   packingList: [{content: 'underwear',
+//                   quanity: 1,
+//                   packed: false}]
+// })
+
+userController.saveList = async (req, res, next) => {
+  const { username, packingList, tripName } = req.body;
+  console.log(req.body);
+  const user = await User.User.findOne({ username: username });
+  console.log('user found!');
+  const newPackingList = new User.packingList({
+    listOfPackingItems: packingList,
+    tripName: tripName,
+  });
+  user.prevPackingLists.push(newPackingList);
+  await newPackingList.save();
+  await user.save();
+  console.log('list saved!');
+  res.locals.user = user;
+  next();
 };
 
 userController.isLoggedIn = async (req, res, next) => {
@@ -95,6 +125,7 @@ userController.isLoggedIn = async (req, res, next) => {
         );
         if (payload) {
           // store user data in request object
+          console.log('user Verified Logged In');
           req.user = payload;
           next();
         } else {

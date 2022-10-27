@@ -1,22 +1,67 @@
+$primary-font: 'Arbutus Slab', serif;
+$secondary-font: 'Barlow', sans-serif;
+$black: #161B27;
 $blue: #227c9d;
 $yellow: #fccb77;
-$white: #fef9ef;
+$white: #faf8f3;
 
 
 body {
     display: grid;
     background-color: $white;
     margin: 0;
-    grid-template-rows: 5vh 95vh;
+    grid-template-rows: 6vh 94vh;
+    color: $black;
 }
 
 #navbar {
     grid-row: 1 / 2;
+    display: grid;
+    grid-template-columns: 15vw 70vw 15vw;
+    place-items: center;
     background-color: $blue;
     width: 100vw;
     height: 100%;
-    grid-template-columns: 20vw 50vw 30vw;
+    
 }
+
+#navbarImg {
+    height: 5vh;
+    width: auto;
+    object-fit: contain;
+}
+
+#left-nav {
+    grid-column: 1 / 2;
+    justify-items: flex-start;
+}
+
+#right-nav {
+    grid-column: 3 / 4;
+    // display: flex;
+    // justify-content: flex-end;
+}
+
+.nav-btns {
+    margin: 0px 10px 0px 10px;
+    padding: 6px;
+    width: 62px;
+    border: none;
+    border-radius: 8px;
+    font-family: $secondary-font;
+    font-weight: 400;
+    color: $black;
+}
+
+#login-btn {
+    background-color: $white;
+}
+
+#signup-btn {
+    background-color: $yellow;
+}
+
+
 
 
 

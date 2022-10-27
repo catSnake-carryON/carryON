@@ -8,11 +8,15 @@ import PackingList from './components/PackingList';
 import TripDetailsForm from './components/TripDetailsForm.js'
 import axios from "axios";
 import './styling/sitewide.scss';
-
+let navbarImg = require('./assets/navbar-img.png');
 //main container
 //routers 
 function App (){
-  const [signupButton, setSignupButton] = useState(false)
+  // const [signupButton, setSignupButton] = useState(false)
+  const [name, setName] = useState('');
+	const [destination, setDestination] = useState('');
+	const [depDate, setDepDate] = useState('');
+  const [returnDate, setReturnDate] = useState('');
 
   const server = axios.create({
     baseURL: 'http://localhost:3000/',
@@ -33,15 +37,15 @@ function App (){
     <>
       <nav id="navbar">
         <section id='left-nav'>
-          <img></img>
+          <img id='navbarImg' src={navbarImg.default}/>
         </section>
         <section id='right-nav'>
           <Link to='/Login'>
-          <button id='login-btn' className='nav-btns'>Log in</button>
-        </Link>
-        <Link to='/Signup'>
-          <button id='signup-btn' className='nav-btns'>Sign up</button>
-        </Link>
+            <button id='login-btn' className='nav-btns'>Log in</button>
+          </Link>
+          <Link to='/Signup'>
+            <button id='signup-btn' className='nav-btns'>Sign up</button>
+          </Link>
         </section>
       </nav>
       <Routes>
@@ -59,10 +63,13 @@ function App (){
         />
         <Route 
           path='/PackingList'
-          element={<PackingList />}
+          element={<PackingList name={name} />}
         />
       </Routes>
     </>
+    // <div>
+    //   <PackingList />
+    // </div>
   )
 }
 export default App;
