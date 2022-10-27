@@ -21,6 +21,7 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  const [dailyWeatherArr, setDailyWeatherArr] = useState(null);
 
   const server = axios.create({
     baseURL: 'http://localhost:3000/',
@@ -66,6 +67,8 @@ function App() {
               destination={destination}
               setDepDate={setDepDate}
               setReturnDate={setReturnDate}
+              dailyWeatherArr={dailyWeatherArr}
+              setDailyWeatherArr={setDailyWeatherArr}
             />
           }
         />

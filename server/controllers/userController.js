@@ -5,18 +5,7 @@ const path = require('path');
 const User = require('../models/UserModel');
 const userController = {};
 const { SECRET = 'secret' } = process.env;
-// const {Client} = require("@googlemaps/google-maps-services-js");
-// console.log(Client);
-// const NodeGeocoder = require('node-geocoder');
-
-// const options = {
-//   provider: 'google',
-
-//   // Optional depending on the providers
-//   fetch: customFetchImplementation,
-//   apiKey: 'AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI', // for Mapquest, OpenCage, Google Premier
-//   formatter: null // 'gpx', 'string', ...
-// };
+const axios = require('axios');
 
 userController.signUp = async (req, res, next) => {
   const { email, password } = req.body;
@@ -95,13 +84,6 @@ userController.getUser = async (req, res, next) => {
   }
 };
 
-// server.post('/saveList', {
-//   username: username,
-//   packingList: [{content: 'underwear',
-//                   quanity: 1,
-//                   packed: false}]
-// })
-
 userController.saveList = async (req, res, next) => {
   const { username, packingList, tripName } = req.body;
   console.log(req.body);
@@ -119,13 +101,29 @@ userController.saveList = async (req, res, next) => {
   next();
 };
 
-// https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-// google api key: AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI
-AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI
-// google api request: https://maps.googleapis.com/maps/api/geocode/{outputFormat}?{parameters}
-// outputFormat should be in JSON,
-
-// userControllerer.getWeather = async (req, res, next) => {};
+userController.getWeather = async (req, res, next) => {
+  const { long, lat } = req.body;
+  axios
+    .get(
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&units=imperial&exclude=current,minutely,hourly,alerts&appid=5ca99c230c4feaec614b615028054e52`
+    )
+    .then((response) => {
+      let dailyTempsArr = [];
+      response.data.daily.forEach((day) => {
+        const obj = {
+          dateTime: day.dt,
+          dayTemp: day.temp.day,
+          dayMin: day.temp.min,
+          dayMax: day.temp.max,
+        };
+        dailyTempsArr.push(obj);
+      });
+      res.locals.dailyTempsArr = dailyTempsArr;
+      console.log(res.locals.dailyTempsArr);
+      return next();
+    })
+    .catch((err) => {});
+};
 
 userController.isLoggedIn = async (req, res, next) => {
   try {

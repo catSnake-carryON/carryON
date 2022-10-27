@@ -13,6 +13,8 @@ const TripDetailsForm = ({
   setDepDate,
   returnDate,
   setReturnDate,
+  dailyWeatherArr,
+  setDailyWeatherArr,
 }) => {
   const navigate = useNavigate();
 
@@ -39,9 +41,9 @@ const TripDetailsForm = ({
     e.preventDefault();
 
     function geocode() {
+      let test = 'test';
       let long;
       let lat;
-      console.log(`destination: ${destination}`);
       axios
         .get('https://maps.googleapis.com/maps/api/geocode/json', {
           params: {
@@ -50,28 +52,26 @@ const TripDetailsForm = ({
           },
         })
         .then((res) => {
-          long = res.data.results[0].geometry.location.lng;
-          lat = res.data.results[0].geometry.location.lat;
-          console.log(long);
-          console.log(lat);
+          server
+            .post('/getWeather', {
+              long: res.data.results[0].geometry.location.lng,
+              lat: res.data.results[0].geometry.location.lat,
+            })
+            .then((res) => {
+              console.log('res.data from backend', res.data);
+              setDailyWeatherArr(res.data);
+              console.log('your daily weather array', dailyWeatherArr);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
         });
     }
-    geocode();
-    // const formData = {
-    //   destination: destination,
-    //   startDate: depDate,
-    //   endDate: returnDate,
-    // };
-    // console.log('form data', formData);
-    // server
-    //   .post('/getWeather', formData)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+
+    const arrOfDailyTemps = geocode();
     navigate('/MainDisplay');
   };
 
@@ -105,7 +105,7 @@ const TripDetailsForm = ({
             <option value='DEFAULT' disabled>
               Where are you headed?
             </option>
-            <option value='San Diego CA 92111'>San Diego</option>
+            <option value='San Diego, California'>San Diego</option>
             <option value='Los Angeles, California'>Los Angeles</option>
             <option value='Sacramento, California'>Sacramento</option>
             <option value='Santa Barbara, California'>Santa Barbara</option>

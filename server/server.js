@@ -44,7 +44,8 @@ app.post('/saveList', userController.saveList, (req, res) => {
 });
 
 app.post('/getWeather', userController.getWeather, (req, res) => {
-  res.send('trying to save List!')
+  console.log(res.locals.dailyTempsArr + 'from server')
+  res.status(201).json(res.locals.dailyTempsArr);
 });
 
 app.post('/signup', userController.signUp, (req, res) => {
