@@ -109,6 +109,7 @@ userController.getWeather = async (req, res, next) => {
     )
     .then((response) => {
       let dailyTempsArr = [];
+      console.log(response.data.daily);
       response.data.daily.forEach((day) => {
         const obj = {
           dateTime: day.dt,

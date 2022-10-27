@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-const DailyWeather = ({ key, id, dateTime, dayTemp, dayMin, dayMax }) => {
+const DailyWeather = ({ id, dateTime, dayTemp, dayMin, dayMax }) => {
+
+  
   return (
     <div>
-      <h4>Avg temp{dayTemp}</h4>
-      <h4>Daily min{dayMin}</h4>
-      <h4>Daily max{dayMax}</h4>
+      <h3>{dateTime}</h3>
+      <p>Avg temp{dayTemp}</p>
+      <p>Daily min{dayMin}</p>
+      <p>Daily max{dayMax}</p>
     </div>
   );
 };
