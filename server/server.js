@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 app.post('/saveList', userController.saveList, (req, res) => {
   console.log('server hit')
   console.log(res.locals.user)
-  res.send('hello from server');
+  res.status(201).send("hello from server");
 }) 
 
 app.post('/signup', userController.signUp, (req, res) => {
