@@ -1,87 +1,160 @@
-import React from "react";
-import { useState } from "react";
-import PackingList from './PackingList';
+import React from 'react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
-const TripDetailsForm = (props) => {
-	const [name, setName] = useState('');
-	const [destination, setDestination] = useState('');
-	const [date, setDate] = useState('');
+const TripDetailsForm = ({
+  name,
+  setName,
+  destination,
+  setDestination,
+  depDate,
+  setDepDate,
+  returnDate,
+  setReturnDate,
+}) => {
+  const navigate = useNavigate();
 
-	const handleSave = async e => {
+  //server for axios
+  const server = axios.create({
+    baseURL: 'http://localhost:3000/',
+  });
+  //this sets the current day as the min, so you can't plan a trip in the past
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1;
+  let yyyy = today.getFullYear();
+
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+  today = yyyy + '-' + mm + '-' + dd;
+
+  //need to send this data to db so we can get the weather
+  const handleNext = (e) => {
     e.preventDefault();
-    try {
-    //send post request to endpoint to create new trip with state passed into request 
-    //reset state
-    //render tripcontainer / un-render tripform
-    // const form = document.getElementById('tripForm');
-    // const formData = new FormData(form);
-    const formData = {name: name, destination: destination, date: date};
-    console.log('form data', formData);
-    const response = await axios.post('/api/trips', formData)
-    if (response.status === 200) alert('Trip Created Successfully'); //--> i want this to disappear
-		}
-		catch(error){ 
-			alert('error creating trip');
 
-			}
-	};
+    function geocode() {
+      let long;
+      let lat;
+      console.log(`destination: ${destination}`);
+      axios
+        .get('https://maps.googleapis.com/maps/api/geocode/json', {
+          params: {
+            address: destination,
+            key: 'AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI',
+          },
+        })
+        .then((res) => {
+          long = res.data.results[0].geometry.location.lng;
+          lat = res.data.results[0].geometry.location.lat;
+          console.log(long);
+          console.log(lat);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    geocode();
+    // const formData = {
+    //   destination: destination,
+    //   startDate: depDate,
+    //   endDate: returnDate,
+    // };
+    // console.log('form data', formData);
+    // server
+    //   .post('/getWeather', formData)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+    navigate('/MainDisplay');
+  };
 
-	//  function handleSubmit(event) {
-	//     event.preventDefault();
-	//     // const loginForm = document.getElementById('loginform')
-	//     // const formData = new FormData(loginForm);
-	//     const formData = {name: name, destination: destination, date: date};
-	//     console.log('form data', formData)
-	//   }
-
-	const handleCancel = e => {
-		//reset all state
-		//hide trip form trip form
-		showTrip(false);
-	}
-
-	return (
-		<div className='main-page-layout'>
-			{/* <Navbar /> */}
-			<h2>Plan your Trip</h2>
-			<div className='newTripForm'></div>
-			<form id='tripForm'>
-							<label>Name:
-							<input
-							type='text'
-							name='name'
-							placeholder='Name your Trip'
-							value={name}
-							onChange={e => {setName(e.target.value)}} 
-							/>
-							</label>
-					<br />
-							<label>Destination:
-							<input
-							type='text'
-							name='destination'
-							placeholder='Where are you headed?'
-							value={destination}
-							onChange={e => {setDestination(e.target.value)}} 
-							/>
-							</label>
-					<br />
-							<label>Date:
-							<input
-							type='text'
-							name='date'
-							placeholder='When are you traveling?'
-							value={date}
-							onChange={e => {setDate(e.target.value)}} 
-							/>
-							</label>
-					{/* <Button text='cancel' onClick={handleCancel}/>
-					<Button text='save' onClick={handleSave}/>  */}
-			</form>
-			</div>
-			);
-}
+  return (
+    <div className='main-page-layout'>
+      <h2>Plan your Trip</h2>
+      <div className='tripFormBox'>
+        <form id='tripForm'>
+          <label>Trip Name:</label>
+          <input
+            type='text'
+            name='name'
+            placeholder='Name your Trip'
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <label>Destination:</label>
+          <select
+            className='destinationDropDown'
+            name='destination'
+            type='text'
+            value={destination}
+            onChange={(e) => {
+              setDestination(e.target.value);
+              console.log(destination);
+            }}
+            defaultValue={'DEFAULT'}
+          >
+            <option value='DEFAULT' disabled>
+              Where are you headed?
+            </option>
+            <option value='San Diego CA 92111'>San Diego</option>
+            <option value='Los Angeles, California'>Los Angeles</option>
+            <option value='Sacramento, California'>Sacramento</option>
+            <option value='Santa Barbara, California'>Santa Barbara</option>
+            <option value='San Jose, California'>San Jose</option>
+            <option value='Fresno, California'>Fresno</option>
+          </select>
+          <label>Departure Date:</label>
+          <input
+            type='date'
+            name='date'
+            placeholder='When are you traveling?'
+            min={today}
+            value={depDate}
+            onChange={(e) => {
+              setDepDate(e.target.value);
+            }}
+          />
+          <label>Return Date:</label>
+          <input
+            type='date'
+            name='date'
+            placeholder='When are you traveling?'
+            min={depDate}
+            value={returnDate}
+            onChange={(e) => {
+              setReturnDate(e.target.value);
+            }}
+          />
+          <button text='next' type='submit' onClick={handleNext}>
+            Next
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default TripDetailsForm;
+
+//  function handleSubmit(event) {
+//     event.preventDefault();
+//     // const loginForm = document.getElementById('loginform')
+//     // const formData = new FormData(loginForm);
+//     const formData = {name: name, destination: destination, date: date};
+//     console.log('form data', formData)
+//   }
+
+// const handleCancel = e => {
+// 	//reset all state
+// 	//hide trip form trip form
+// 	showTrip(false);
+// }
