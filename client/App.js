@@ -100,6 +100,7 @@ function App() {
               destination={destination}
               depDate={depDate}
               returnDate={returnDate}
+              dailyWeatherArr={dailyWeatherArr}
             />
           }
         />

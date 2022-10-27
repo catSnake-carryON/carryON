@@ -60,7 +60,7 @@ const TripDetailsForm = ({
             .then((res) => {
               console.log('res.data from backend', res.data);
               setDailyWeatherArr(res.data);
-              console.log('your daily weather array', dailyWeatherArr);
+			  navigate('/MainDisplay');
             })
             .catch((err) => {
               console.log(err);
@@ -72,7 +72,6 @@ const TripDetailsForm = ({
     }
 
     const arrOfDailyTemps = geocode();
-    navigate('/MainDisplay');
   };
 
   return (
