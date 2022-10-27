@@ -19,6 +19,7 @@ const { SECRET = 'secret' } = process.env;
 // };
 
 userController.signUp = async (req, res, next) => {
+  console.log('hello')
   const { email, password } = req.body;
   console.log('signup middleware hit');
   try {
@@ -32,7 +33,7 @@ userController.signUp = async (req, res, next) => {
       res.locals.newUser = user;
       console.log(user);
     } else {
-      res.sendFile(path.resolve(__dirname, '../client/login.html'));
+      res.locals.newUser = 'You are already a user! Please use Log In'
     }
     return next();
   } catch (error) {
@@ -54,7 +55,7 @@ userController.login = async (req, res, next) => {
     // check if the user exists
     const user = await User.User.findOne({ email });
     if (user) {
-      console.log(user);
+      console.log(user.password);
       // check if password matches
       const result = await bcrypt.compare(password, user.password);
       if (result) {
@@ -63,17 +64,22 @@ userController.login = async (req, res, next) => {
         //   { email: user.email },
         //   process.env.ACCESS_TOKEN_SECRET
         // );
-        res.locals.user = user;
+        console.log(result)
+        res.locals.user = result;
         // res.locals.loginToken = { token };
         return next();
       } else {
-        res.status(400).alert('Incorrect Password, Try Again');
+        res.locals.user = 'Incorrect login, Try Again';
       }
     } else {
-      res.sendFile(path.resolve(__dirname, '../client/signup.html'));
+      res.locals.user = 'User doesn\'t exist, Please signup~';
     }
   } catch (error) {
-    res.status(400).json({ error });
+    next({
+      log: 'Error in userController.login',
+      status: 400,
+      message: 'Could not locate user, please try again'
+    })
   }
 };
 
@@ -121,7 +127,7 @@ userController.saveList = async (req, res, next) => {
 
 // https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 // google api key: AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI
-AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI
+// AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI
 // google api request: https://maps.googleapis.com/maps/api/geocode/{outputFormat}?{parameters}
 // outputFormat should be in JSON,
 

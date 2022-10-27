@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import MainDisplay from './components/MainDisplay';
 import TripDetailsForm from './components/TripDetailsForm.js';
+import ListContainer from './components/ListContainer';
 import axios from 'axios';
 import './styling/sitewide.scss';
 let navbarImg = require('./assets/navbar-img.png');
@@ -56,15 +57,19 @@ function App() {
           </Link>
         </section>
       </nav>
+      <div id='page-content'>
       <Routes>
         <Route
           path='/'
           element={
             <TripDetailsForm
+              name={name}
               setName={setName}
               setDestination={setDestination}
               destination={destination}
+              depDate={depDate}
               setDepDate={setDepDate}
+              returnDate={returnDate}
               setReturnDate={setReturnDate}
             />
           }
@@ -73,8 +78,11 @@ function App() {
           path='/Login'
           element={
             <Login
+              email={email}
               setEmail={setEmail}
+              password={password}
               setPassword={setPassword}
+              loggedIn={loggedIn}
               setLoggedIn={setLoggedIn}
             />
           }
@@ -83,8 +91,11 @@ function App() {
           path='/Signup'
           element={
             <Signup
+              email={email}
               setEmail={setEmail}
+              username={username}
               setUsername={setUsername}
+              password={password}
               setPassword={setPassword}
             />
           }
@@ -101,10 +112,8 @@ function App() {
           }
         />
       </Routes>
+      </div>
     </>
-    // <div>
-    //   <PackingList />
-    // </div>
   );
 }
 export default App;

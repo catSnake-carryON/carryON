@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PackingItem from './PackingItem';
 
-const ListContainer = ({ arrOfItems }) => {
+const ListContainer = ({ arrOfItems, loggedIn }) => {
   const itemsList = [];
   arrOfItems.forEach((item, i) => {
     itemsList.unshift(
@@ -17,10 +17,11 @@ const ListContainer = ({ arrOfItems }) => {
 
   return (
     <div>
-      {itemsList.length > 0 ? { itemsList } : null}
+      {/* {itemsList.length > 0 ? { itemsList } : null}
       {itemsList.length > 0 ? (
         <button onClick={handleSave}>Save List</button>
-      ) : null}
+      ) : null} */}
+      {itemsList}
     </div>
   );
 };
