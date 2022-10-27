@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router';
 import PackingItem from './PackingItem';
 import axios from 'axios';
+import '../styling/main-display/main-display.scss'
 
 const ListContainer = ({
   arrOfItems,
@@ -16,6 +18,8 @@ const ListContainer = ({
     baseURL: 'http://localhost:3000/',
   });
 
+  const navigate = useNavigate();
+  
   const handleSave = (e) => {
     e.preventDefault();
     const savedList = {
@@ -41,7 +45,7 @@ const ListContainer = ({
 
   const redirectToLogin = (e) => {
     e.preventDefault();
-    console.log('yay');
+    navigate('/login')
   };
 
   const itemsList = [];
@@ -57,8 +61,9 @@ const ListContainer = ({
       {itemsList.length > 0 && loggedIn === true ? (
         <button onClick={handleSave}>Save List</button>
       ) : (
-        <button onClick={redirectToLogin}>Login to save!</button>
+        null
       )}
+      {itemsList.length > 0 && loggedIn === false ? (<button onClick={redirectToLogin} id='login-button'>Login to save!</button>) : null}
     </div>
   );
 };

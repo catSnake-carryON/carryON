@@ -6,29 +6,28 @@ $yellow: #fccb77;
 $white: #faf8f3;
 
 #main-display-layout {
-    width: 100%;
-    display: grid;
-    grid-template-rows: 10vh 20vh 60vh;
-    grid-template-columns: 2fr 1fr;
-    grid-template-areas: 
-        'header header'
-        'main sidebar'
-        'main sidebar'
-    ;
+    margin-top: 60px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
 }
 
 #trip-title {
-    grid-area: header;
-}
+    margin-top: 20px;
+    font-size: 2rem;
+    min-width: 355px;
+}   
 
 #add-item {
-    grid-area: 2 / 1 / 3 / 2;
-}
-
-#list {
-    grid-area: main;
-}
-
-#weather {
-    grid-area: sidebar;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    background-color: $yellow;
+    padding: 40px 70px;
+    border-radius: 8px;
+    font-weight: 400;
+    color: $black;
+    width: 70%;    
+    min-width: 300px;
+    font-family: $secondary-font;
 }

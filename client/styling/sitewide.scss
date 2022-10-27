@@ -23,6 +23,11 @@ body {
     place-self: stretch center;
 }
 
+#hello-text {
+    color: $white;
+    font-family: $primary-font;
+}
+
 #navbar {
     grid-row: 1 / 2;
     display: grid;

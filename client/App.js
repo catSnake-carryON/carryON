@@ -39,7 +39,7 @@ function App() {
               </button>
             </Link>
           ) : (
-            <p>hello user</p>
+            <p id='hello-text'>Hello {username}!</p>
           )}
           {loggedIn === false ? (
             <Link to='/Signup'>
@@ -48,7 +48,8 @@ function App() {
               </button>
             </Link>
           ) : (
-            <button>My Lists</button>
+            null
+            // <button id='signup-btn' className='nav-btns'>My Lists</button>
           )}
         </section>
       </nav>
