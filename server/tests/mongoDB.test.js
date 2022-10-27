@@ -1,4 +1,5 @@
 import { User, packingList } from "..models/UserModel";
+import jest from "jest";
 
 const mongoose = require("mongoose");
 
