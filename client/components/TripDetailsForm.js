@@ -14,9 +14,6 @@ const TripDetailsForm = ({
   returnDate,
   setReturnDate,
 }) => {
-	// let geocoder = new google.maps.Geocoder();
-	// console.log(geocoder);
-
   const navigate = useNavigate();
 
   //server for axios
@@ -40,18 +37,41 @@ const TripDetailsForm = ({
   //need to send this data to db so we can get the weather
   const handleNext = (e) => {
     e.preventDefault();
-    const formData = {
-      destination: destination,
-      startDate: depDate,
-      endDate: returnDate,
-    };
-    console.log('form data', formData);
-    server
-      .post('/getWeather', formData)
-      .then((res) => console.log(res))
-      .catch((err) => {
-        console.error(err);
-      });
+
+    function geocode() {
+      let long;
+      let lat;
+      console.log(`destination: ${destination}`);
+      axios
+        .get('https://maps.googleapis.com/maps/api/geocode/json', {
+          params: {
+            address: destination,
+            key: 'AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI',
+          },
+        })
+        .then((res) => {
+          long = res.data.results[0].geometry.location.lng;
+          lat = res.data.results[0].geometry.location.lat;
+          console.log(long);
+          console.log(lat);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    geocode();
+    // const formData = {
+    //   destination: destination,
+    //   startDate: depDate,
+    //   endDate: returnDate,
+    // };
+    // console.log('form data', formData);
+    // server
+    //   .post('/getWeather', formData)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
     navigate('/MainDisplay');
   };
 
@@ -78,18 +98,19 @@ const TripDetailsForm = ({
             value={destination}
             onChange={(e) => {
               setDestination(e.target.value);
+              console.log(destination);
             }}
             defaultValue={'DEFAULT'}
           >
             <option value='DEFAULT' disabled>
               Where are you headed?
             </option>
-            <option value='San Diego'>San Diego</option>
-            <option value='Los Angeles'>Los Angeles</option>
-            <option value='Sacramento'>Sacramento</option>
-            <option value='Santa Barbara'>Santa Barbara</option>
-            <option value='San Jose'>San Jose</option>
-            <option value='Fresno'>Fresno</option>
+            <option value='San Diego CA 92111'>San Diego</option>
+            <option value='Los Angeles, California'>Los Angeles</option>
+            <option value='Sacramento, California'>Sacramento</option>
+            <option value='Santa Barbara, California'>Santa Barbara</option>
+            <option value='San Jose, California'>San Jose</option>
+            <option value='Fresno, California'>Fresno</option>
           </select>
           <label>Departure Date:</label>
           <input
@@ -124,16 +145,16 @@ const TripDetailsForm = ({
 
 export default TripDetailsForm;
 
-  //  function handleSubmit(event) {
-  //     event.preventDefault();
-  //     // const loginForm = document.getElementById('loginform')
-  //     // const formData = new FormData(loginForm);
-  //     const formData = {name: name, destination: destination, date: date};
-  //     console.log('form data', formData)
-  //   }
+//  function handleSubmit(event) {
+//     event.preventDefault();
+//     // const loginForm = document.getElementById('loginform')
+//     // const formData = new FormData(loginForm);
+//     const formData = {name: name, destination: destination, date: date};
+//     console.log('form data', formData)
+//   }
 
-  // const handleCancel = e => {
-  // 	//reset all state
-  // 	//hide trip form trip form
-  // 	showTrip(false);
-  // }
+// const handleCancel = e => {
+// 	//reset all state
+// 	//hide trip form trip form
+// 	showTrip(false);
+// }

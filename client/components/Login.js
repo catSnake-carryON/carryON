@@ -13,6 +13,7 @@ const Login = ({
     baseURL: 'http://localhost:3000/',
   });
 
+  //test login and signup
   const loginHandler = (e) => {
     e.preventDefault();
     const login = { email: password, password: password };
@@ -25,7 +26,7 @@ const Login = ({
       .catch((err) => {
         console.error(err);
       });
-      //where should we route a logged in user?
+    //where should we route a logged in user?
     // navigate('/MyTrips');
   };
 

@@ -63,6 +63,7 @@ function App() {
             <TripDetailsForm
               setName={setName}
               setDestination={setDestination}
+              destination={destination}
               setDepDate={setDepDate}
               setReturnDate={setReturnDate}
             />
@@ -78,15 +79,15 @@ function App() {
             />
           }
         />
-        <Route 
-          path='/Signup' 
+        <Route
+          path='/Signup'
           element={
             <Signup
-            setEmail={setEmail}
-            setUsername={setUsername}
-            setPassword={setPassword}
+              setEmail={setEmail}
+              setUsername={setUsername}
+              setPassword={setPassword}
             />
-          } 
+          }
         />
         <Route
           path='/MainDisplay'

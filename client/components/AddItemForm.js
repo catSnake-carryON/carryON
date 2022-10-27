@@ -28,7 +28,6 @@ const AddItemForm = ({
     setItemQuantity(1);
   };
 
-  // add an option add quantity to item
   return (
     <div>
       <h1>Add Item Form</h1>
