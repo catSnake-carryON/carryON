@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import '../styling/login/login.scss'
 
 const Login = ({
   email,
@@ -10,7 +11,7 @@ const Login = ({
   username,
   setUsername,
   loggedIn,
-  setLoggedIn,
+  setLoggedIn
 }) => {
   const server = axios.create({
     baseURL: 'http://localhost:3000/',
@@ -30,13 +31,6 @@ const Login = ({
       // .then((res) => console.log(res))
       .then((res) => {
         console.log(res);
-        // if (res.data === true) {
-        //   setLoggedIn(true);
-        //   navigate('/');
-        // }
-        // else {
-        //   alert(res.data);
-        // }
         if (typeof res.data.result === 'string') {
           alert(res.data.result);
         }
@@ -49,76 +43,45 @@ const Login = ({
       .catch((err) => {
         console.error(err);
       });
-    //where should we route a logged in user?
-    // navigate('/MyTrips');
   };
 
   return (
-    <div className='loginDiv'>
-      <h1>Hey I am login</h1>
-      <label>Email:</label>
-      <input
-        name='email'
-        type='text'
-        placeholder='email'
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-      <label>Password:</label>
-      <input
-        name='password'
-        type='text'
-        placeholder='password'
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
-      <button onClick={loginHandler}>Log in</button>
+    <div id='login-div'>
+      <h1 id='login-title'>Welcome back</h1>
+      <div id='login-box'>
+        <form>
+          <section className='login-section'>
+            <label>Email:</label>
+            <input
+              name='email'
+              type='text'
+              className='login-input'
+              placeholder='email'
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+          </section>
+          <section className='login-section'>
+            <label>Password:</label>
+            <input
+              name='password'
+              type='text'
+              className='login-input'
+              placeholder='password'
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </section>
+        </form>
+        <button id='login-button' onClick={loginHandler}>Log in</button>
+      </div>
     </div>
   );
 };
 
 export default Login;
 
-//   const [values, setValues] = useState(
-//     {
-//     email:'',
-//     password:''
-// });
-// const [email, setEmail] = useState('');
-// const [password, setPassword] = useState('');
-
-// function validateForm() {
-//   return email.length > 0 && password.length > 0;
-// }
-
-// function handleSubmit(event) {
-//   event.preventDefault();
-//   // const loginForm = document.getElementById('loginform')
-//   // const formData = new FormData(loginForm);
-//   const formData = {email: email, password: password};
-//   console.log("login data", formData)
-// }
-// axios.post('/api/users/login', formData)
-// .then(response => {
-//   if (response.status === 200) console.log("logged in successfully")
-// .catch(error => {
-//   console.log('error loging in ')
-// })
-// })
-
-/* <form id="loginform">
-    <div className="form-group text-left">
-    <label></label>
-    <input name = 'email' placeholder="Enter email" value={email} onChange={e => {setEmail(e.target.value)}}/>
-    </div>
-    <br></br>
-    <div className="form-group text-left">
-    <label></label>
-    <input name='password' placeholder="Password" value={password} onChange={e => {setPassword(e.target.value)}}/>
-    </div> 
-    <br></br>
-    {/* <Button  className="login-btn" text='Log In' onClick={handleSubmit}/> */

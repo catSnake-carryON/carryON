@@ -77,7 +77,7 @@ const TripDetailsForm = ({
 
   return (
     <div id='main-page-layout'>
-      <h2>Plan your Trip</h2>
+      <h2 id='trip-form-title'>Plan your Trip</h2>
       <div id='tripFormBox'>
         <form id='tripForm'>
 		  <section className='form-section'>
@@ -85,6 +85,7 @@ const TripDetailsForm = ({
 			<input
 				type='text'
 				name='name'
+        className='input-style'
 				placeholder='Name your Trip'
 				value={name}
 				onChange={(e) => {
@@ -95,8 +96,8 @@ const TripDetailsForm = ({
 		  <section className='form-section'>
 			<label>Destination:</label>
 			<select
-				className='destinationDropDown'
 				name='destination'
+        className='input-style'
 				type='text'
 				value={destination}
 				onChange={(e) => {
@@ -121,6 +122,7 @@ const TripDetailsForm = ({
 				type='date'
 				name='date'
 				placeholder='When are you traveling?'
+        className='input-style'
 				min={today}
 				value={depDate}
 				onChange={(e) => {
@@ -136,16 +138,18 @@ const TripDetailsForm = ({
 				placeholder='When are you traveling?'
 				min={depDate}
 				value={returnDate}
+        className='input-style'
 				onChange={(e) => {
 				setReturnDate(e.target.value);
 				}}
 			/>
 		  </section>
-          <button text='next' type='submit' onClick={handleNext}>
-            Next
-          </button>
         </form>
+        <button text='next' type='submit' id='next-btn' onClick={handleNext}>
+            Next
+        </button>
       </div>
+
     </div>
   );
 };

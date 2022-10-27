@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import '../styling/signup/signup.scss'
 
 const Signup = ({
   email,
@@ -53,41 +54,51 @@ const Signup = ({
   };
 
   return (
-    <div>
-      <div>
+    <div id='signup-div'>
+      <h1 id='signup-title'>Welcome to carryON</h1>
+      <div id='signup-box'>
         <form>
-          <label>Email:</label>
-          <input
-            name='email'
-            type='text'
-            placeholder='email'
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <label>Username:</label>
-          <input
-            name='username'
-            type='text'
-            placeholder='username'
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
-          <label>Password:</label>
-          <input
-            name='password'
-            type='password'
-            placeholder='password'
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
+          <section className='signup-section'>
+            <label>Email:</label>
+            <input
+              name='email'
+              type='text'
+              className='signup-input'
+              placeholder='email'
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+          </section>
+          <section className='signup-section'>
+            <label>Username:</label>
+            <input
+              name='username'
+              type='text'
+              placeholder='username'
+              className='signup-input'
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
+          </section>
+          <section className='signup-section'>
+            <label>Password:</label>
+            <input
+              name='password'
+              type='password'
+              placeholder='password'
+              className='signup-input'
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </section>
         </form>
-        <button text='signup' type='submit' onClick={createUserHandler}>Sign Up</button>
+        <button id='signup-button' text='signup' type='submit' onClick={createUserHandler}>Sign Up</button>
       </div>
     </div>
   );

@@ -1,0 +1,34 @@
+$primary-font: 'Arbutus Slab', serif;
+$secondary-font: 'Barlow', sans-serif;
+$black: #161B27;
+$blue: #227c9d;
+$yellow: #fccb77;
+$white: #faf8f3;
+
+#main-display-layout {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 10vh 20vh 60vh;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+        'header header'
+        'main sidebar'
+        'main sidebar'
+    ;
+}
+
+#trip-title {
+    grid-area: header;
+}
+
+#add-item {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+#list {
+    grid-area: main;
+}
+
+#weather {
+    grid-area: sidebar;
+}

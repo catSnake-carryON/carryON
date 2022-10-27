@@ -9,6 +9,7 @@ import TripDetailsForm from './components/TripDetailsForm.js';
 import ListContainer from './components/ListContainer';
 import axios from 'axios';
 import './styling/sitewide.scss';
+
 let navbarImg = require('./assets/navbar-img.png');
 //main container
 //routers
@@ -114,21 +115,12 @@ function App() {
           />
         </Routes>
       </div>
+      {/* <div id='page-content'>
+      <MainDisplay/>
+      </div> */}
     </>
   );
 }
 export default App;
 
-// {/* <div className="App">
-//       <main id='title'>
-//         <h1>Welcome to carryON!</h1>
-//         <br />
-//         <button onClick={handleClick}>Testing Backend</button>
-//         <button onClick = {() => setSignupButton(true)}>Sign Up!</button>
-//         {/* <Signup trigger={signupButton} setTrigger={setSignupButton}>
-//         {/* </Signup>
-//       </main>
-//       <div>
-//         {/* <TripContainer></TripContainer>
-//     </div>
-//     </div> */}
+
