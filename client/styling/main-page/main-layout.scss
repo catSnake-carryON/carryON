@@ -1,0 +1,37 @@
+$primary-font: 'Arbutus Slab', serif;
+$secondary-font: 'Barlow', sans-serif;
+$black: #161B27;
+$blue: #227c9d;
+$yellow: #fccb77;
+$white: #faf8f3;
+
+#main-page-layout {
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    width: 20%;
+    height: 60%;
+
+}
+
+#tripformBox {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    background-color: $yellow;
+    padding: 40px 80px;
+    border-radius: 8px;
+    font-family: $secondary-font;
+    font-weight: 400;
+    color: $black;
+    width: 100%;    
+    
+}
+
+.form-section {
+    display: flex;
+    justify-content: space-between;
+}
+

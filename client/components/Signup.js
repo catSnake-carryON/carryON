@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 
 const Signup = ({
   email,
@@ -11,6 +13,12 @@ const Signup = ({
   //maybe make a state that when user signs up
   //popup that they have successfully signed up?
   //clear state
+  const server = axios.create({
+    baseURL: 'http://localhost:3000/',
+  });
+
+  const navigate = useNavigate();
+
   const createUserHandler = (e) => {
     e.preventDefault();
     const userData = {
@@ -20,11 +28,28 @@ const Signup = ({
     };
     console.log('user data', userData);
     server
-      .post('/sigunp', userData)
-      .then((res) => console.log(res))
+      .post('/signup', userData)
+      // .then((res) => console.log('I am the res', res))
+      .then((res) => {
+        // console.log('I am the res', data)
+        // if res = str, alert that they already have account
+        //alert: you have successfully signed up
+        if(typeof res.data === 'string') {
+          alert(res.data) 
+          navigate('/Login')
+        }
+        else {
+          alert('You have successfully signed up~')
+          navigate('/Login')
+        }
+        // console.log('I am the res', res)
+      })
       .catch((err) => {
         console.error(err);
       });
+    setEmail('');
+    setUsername('');
+    setPassword('');
   };
 
   return (
@@ -62,7 +87,7 @@ const Signup = ({
             }}
           />
         </form>
-        <button onClick={createUserHandler}>Sign Up</button>
+        <button text='signup' type='submit' onClick={createUserHandler}>Sign Up</button>
       </div>
     </div>
   );
