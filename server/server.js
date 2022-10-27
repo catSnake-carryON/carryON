@@ -33,31 +33,34 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
 //testing backend
 app.get('/', (req, res) => {
-  console.log('you are in the server')
+  console.log('you are in the server');
   res.status(200).send('hello! you are connected :)');
 });
 
 app.post('/saveList', userController.saveList, (req, res) => {
-  console.log('server hit')
-  console.log(res.locals.user)
+  console.log('server hit');
+  console.log(res.locals.user);
   res.send('hello from server');
-}) 
+});
+
+app.post('/getWeather', userController.getWeather, (req, res) => {
+  res.send('trying to save List!')
+});
 
 app.post('/signup', userController.signUp, (req, res) => {
-  console.log('server hit')
-  console.log(res.locals.user)
+  console.log('server hit');
+  console.log(res.locals.user);
   res.send('hello from server');
-})
+});
 
 app.post('/login', userController.login, (req, res) => {
   res.send('hello from server');
-})
+});
 
 //assumes checking for logged in status on frontend before sending req
 
 // app.use('/api/trips', tripRouter);
 // app.use('/api/users', userRouter);
-
 
 // server.post('/saveList', {
 //   username: username,
@@ -65,11 +68,6 @@ app.post('/login', userController.login, (req, res) => {
 //                   quanity: 1,
 //                   packed: false}]
 // })
-
-
-
-
-
 
 app.use((req, res) => res.status(404));
 

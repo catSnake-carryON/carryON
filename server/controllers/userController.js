@@ -6,6 +6,7 @@ const User = require('../models/UserModel');
 const userController = {};
 const { SECRET = 'secret' } = process.env;
 
+
 userController.signUp = async (req, res, next) => {
   const { email, password } = req.body;
   console.log('signup middleware hit');
@@ -106,6 +107,13 @@ userController.saveList = async (req, res, next) => {
   res.locals.user = user;
   next();
 };
+
+// https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+// google api key: AIzaSyCykpyAPQzrmS4sECtOywEAbOr2KpKg6mI
+// google api request: https://maps.googleapis.com/maps/api/geocode/{outputFormat}?{parameters}
+// outputFormat should be in JSON,
+
+userControllerer.getWeather = async (req, res, next) => {};
 
 userController.isLoggedIn = async (req, res, next) => {
   try {

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 
-function Signup(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+const Signup = ({ 
+  email, 
+  setEmail, 
+  username, 
+  setUsername, 
+  password, 
+  setPassword
+}) => {
+  
   function validateForm() {
     return email.length > 0 && password.length > 0 && username.length > 0;
   }
@@ -11,13 +16,12 @@ function Signup(props) {
     event.preventDefault();
     // const loginForm = document.getElementById('loginform')
     // const formData = new FormData(loginForm);
-    const formData = {email: email, password: password};
-    console.log("sign Up data", formData)
+    const formData = { email: email, password: password };
+    console.log('sign Up data', formData);
   }
 
   // return (props.trigger) ? (
 
-  
   //   <div className="signup">
   //     <div className="signup-inner">
   //     <br />
@@ -46,9 +50,19 @@ function Signup(props) {
   // ) : '';
   return (
     <div>
-      <h1>Hi I am signup</h1>
+      <div>
+        <form className='SignUpForm' onSubmit={createUserHandler}>
+          <label>Email:</label>
+          <input name='email' type='text' placeholder='email' />
+          <label>Username:</label>
+          <input name='username' type='text' placeholder='username' />
+          <label>Password:</label>
+          <input name='password' type='password' placeholder='password' />
+        </form>
+        <button onClick={createUserHandler}>Sign Up</button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Signup;
