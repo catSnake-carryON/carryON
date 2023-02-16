@@ -1,0 +1,33 @@
+$primary-font: 'Arbutus Slab', serif;
+$secondary-font: 'Barlow', sans-serif;
+$black: #161B27;
+$blue: #227c9d;
+$yellow: #fccb77;
+$white: #faf8f3;
+
+#main-display-layout {
+    margin-top: 60px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+#trip-title {
+    margin-top: 20px;
+    font-size: 2rem;
+    min-width: 355px;
+}   
+
+#add-item {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    background-color: $yellow;
+    padding: 40px 70px;
+    border-radius: 8px;
+    font-weight: 400;
+    color: $black;
+    width: 70%;    
+    min-width: 300px;
+    font-family: $secondary-font;
+}

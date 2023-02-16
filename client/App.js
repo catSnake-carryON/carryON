@@ -9,6 +9,7 @@ import TripDetailsForm from './components/TripDetailsForm.js';
 import ListContainer from './components/ListContainer';
 import axios from 'axios';
 import './styling/sitewide.scss';
+
 let navbarImg = require('./assets/navbar-img.png');
 //main container
 //routers
@@ -38,7 +39,7 @@ function App() {
               </button>
             </Link>
           ) : (
-            <p>hello user</p>
+            <p id='hello-text'>Hello {username}!</p>
           )}
           {loggedIn === false ? (
             <Link to='/Signup'>
@@ -47,7 +48,8 @@ function App() {
               </button>
             </Link>
           ) : (
-            <button>My Lists</button>
+            null
+            // <button id='signup-btn' className='nav-btns'>My Lists</button>
           )}
         </section>
       </nav>
@@ -114,21 +116,12 @@ function App() {
           />
         </Routes>
       </div>
+      {/* <div id='page-content'>
+      <MainDisplay/>
+      </div> */}
     </>
   );
 }
 export default App;
 
-// {/* <div className="App">
-//       <main id='title'>
-//         <h1>Welcome to carryON!</h1>
-//         <br />
-//         <button onClick={handleClick}>Testing Backend</button>
-//         <button onClick = {() => setSignupButton(true)}>Sign Up!</button>
-//         {/* <Signup trigger={signupButton} setTrigger={setSignupButton}>
-//         {/* </Signup>
-//       </main>
-//       <div>
-//         {/* <TripContainer></TripContainer>
-//     </div>
-//     </div> */}
+

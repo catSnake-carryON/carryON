@@ -10,7 +10,7 @@ body {
     display: grid;
     background-color: $white;
     margin: 0;
-    grid-template-rows: 6vh 94vh;
+    grid-template-rows: minmax(70px, auto) 6% 94%;
     color: $black;
     font-family: $primary-font;
 }
@@ -23,10 +23,15 @@ body {
     place-self: stretch center;
 }
 
+#hello-text {
+    color: $white;
+    font-family: $primary-font;
+}
+
 #navbar {
     grid-row: 1 / 2;
     display: grid;
-    grid-template-columns: 15vw 70vw 15vw;
+    grid-template-columns: 165px auto 185px;
     place-items: center;
     background-color: $blue;
     width: 100vw;
@@ -34,8 +39,9 @@ body {
 }
 
 #navbarImg {
-    height: 5vh;
+    height: 50px;
     width: auto;
+    margin-left: 70px;
     object-fit: contain;
 }
 
@@ -46,6 +52,7 @@ body {
 
 #right-nav {
     grid-column: 3 / 4;
+    margin-right: 10%;
     // display: flex;
     // justify-content: flex-end;
 }

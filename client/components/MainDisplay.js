@@ -3,6 +3,7 @@ import AddItemForm from './AddItemForm';
 import ListContainer from './ListContainer';
 import Weather from './Weather';
 import axios from 'axios';
+import '../styling/main-display/main-display.scss'
 
 const MainDisplay = ({
   loggedIn,
@@ -24,14 +25,15 @@ const MainDisplay = ({
 
 
   return (
-    <div>
+    <div id='main-display-layout'>
       <div className='tripDetails'>
-        <h1>{name}</h1>
-        <p>Where: {destination}</p>
+        <h1 id='trip-title'>{name}</h1>
+        <p className=''>Where: {destination}</p>
         <p>Departure: {depDate}</p>
         <p>Return: {returnDate}</p>
       </div>
       <AddItemForm
+        id='add-item'
         itemInput={itemInput}
         setItemInput={setItemInput}
         arrOfItems={arrOfItems}
@@ -40,16 +42,17 @@ const MainDisplay = ({
         setItemQuantity={setItemQuantity}
       />
       <ListContainer
+        id='list'
         name={name}
         arrOfItems={arrOfItems}
-		setArrOfItems={setArrOfItems}
+		    setArrOfItems={setArrOfItems}
         username={username}
         destination={destination}
         depDate={depDate}
         returnDate={returnDate}
         loggedIn={loggedIn}
       />
-      <Weather dailyWeatherArr={dailyWeatherArr} />
+      <Weather id='weather' dailyWeatherArr={dailyWeatherArr} />
     </div>
   );
 };
